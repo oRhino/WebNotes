@@ -14,11 +14,19 @@ text-decoration-style: 用于设置由text-decoration-line设定的线的样式
 solid | double | dotted | dashed | wavy
 
 
-2.text-transform:capalized/
-3.text-indent(首行内容的缩进大小): px/em(相对于字体的大小)
-4.text-align:
-5.word/letter-spacing:
+2.text-transform:
+none | capitalize | uppercase | lowercase | full-width 
 
+3.text-indent(首行内容的缩进大小): px/em(相对于字体的大小)/百分比(取决于其包含块（containing block）的宽度)
+
+4.text-align:定义行内内容(行内元素)（例如文字）如何相对它的块父元素对齐
+left/right/center/justify(两端对齐,多行文本时可以看出效果)
+text_align-last 最后一行在被强制换行之前的对齐规则。
+
+5.word/letter-spacing:
+词间距/字母间距
+
+## 字体属性
 
 ## 行内元素与块级元素
 
