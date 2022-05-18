@@ -1,3 +1,25 @@
+## 颜色表示
+- color keywords
+- RGB颜色空间表示(rgb/rgba/十六进制表示/十六进制缩写)
+
+## 文本属性
+
+1. text-decoration:
+设置文本的修饰线外观的（下划线、贯穿线/删除线、上划线、闪烁）
+它是text-decoration-line, text-decoration-color, text-decoration-style, 和新出现的text-decoration-thickness属性的缩写。
+
+text-decoration-line:可以设置为 none, 或者一个及多个用空格分隔的下列值
+none/underline/line-through/overline/blink
+text-decoration-style: 用于设置由text-decoration-line设定的线的样式
+solid | double | dotted | dashed | wavy
+
+
+2.text-transform:capalized/
+3.text-indent(首行内容的缩进大小): px/em(相对于字体的大小)
+4.text-align:
+5.word/letter-spacing:
+
+
 ## 行内元素与块级元素
 
 
