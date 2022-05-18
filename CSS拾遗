@@ -27,6 +27,34 @@ text_align-last 最后一行在被强制换行之前的对齐规则。
 词间距/字母间距
 
 ## 字体属性
+1. font-size
+指定字体的大小
+绝对大小值|相对大小值|长度值|百分比值
+
+
+2. font-family
+通过给定一个有先后顺序的，由字体名或者字体族名组成的列表来为选定的元素设置字体。
+属性值用逗号隔开。浏览器会选择列表中第一个该计算机上有安装的字体，或者是通过 @font-face 指定的可以直接下载的字体。
+
+3. font-weight
+设置文字的粗细(1-1000)
+常见的取值: 100|200|300|400|500|600|700|800|900
+默认400,bold:700
+strong/b/h1-h6 等标签的font-weight默认就是bold
+
+4.font-style
+normal/italic(斜体,字体本身支持斜体时,显示的斜体)/oblique(倾斜,让文本进行倾斜)
+em,i,cite,address,var,dfn等元素的font-style默认就是italic
+
+5.font-variant
+影响小写字母的显示形式
+variant 变形的意思
+
+normal(正常)|small-caps(将小写字母替换为缩小过的大写字母)
+
+6.line-height
+行高:两行文字基线baseline之间的间距
+基线baseline:与小写字母x最底部对齐的线.(顶线,中线,基线,底线)
 
 ## 行内元素与块级元素
 
