@@ -55,6 +55,14 @@ normal(正常)|small-caps(将小写字母替换为缩小过的大写字母)
 6.line-height
 行高:两行文字基线baseline之间的间距
 基线baseline:与小写字母x最底部对齐的线.(顶线,中线,基线,底线)
+字体内容相对于line-height总是居中显示的,所以对于单行文本line-height = height可以让文字垂直居中.
+
+7.font 属性缩写
+font: font-style font-variant font-weight font-size/line-height font-family
+- font-style font-variant font-weight 可以随意调换顺序,也可以省略
+- /line-height可以省略,也可以不省略,不省略必须跟在font-size后面
+- font-size font-family 不可以省略 也不可以调换顺序
+
 
 ## 行内元素与块级元素
 
