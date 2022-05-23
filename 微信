@@ -1,1 +1,77 @@
 JSSDK 文档地址: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1
+
+
+## 微信支付
+
+文档: https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_1.shtml#part-4
+
+### JSAPI支付
+
+文档: https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_3.shtml
+** JSAPI支付只能从微信浏览器内发起支付请求 **
+
+
+```
+ function onBridgeReady() {
+      WeixinJSBridge.invoke('getBrandWCPayRequest', {
+          "appId": "wx2421b1c4370ecxxx",   //公众号ID，由商户传入    
+          "timeStamp": "1395712654",   //时间戳，自1970年以来的秒数    
+          "nonceStr": "e61463f8efa94090b1f366cccfbbb444",      //随机串    
+          "package": "prepay_id=wx21201855730335ac86f8c43d1889123400",//预支付id
+          "signType": "RSA",     //微信签名方式：    
+          "paySign": "oR9d8PuhnIc+YZ8cBHFCwfgpaK9gd7vaRvkYD7rthRAZ\/X+QBhcCYL21N7cHCTUxbQ+EAt6Uy+lwSN22f5YZvI45MLko8Pfso0jm46v5hqcVwrk6uddkGuT+Cdvu4WBqDzaDjnNa5UK3GfE1Wfl2gHxIIY5lLdUgWFts17D4WuolLLkiFZV+JSHMvH7eaLdT9N5GBovBwu5yYKUR7skR8Fu+LozcSqQixnlEZUfyE55feLOQTUYzLmR9pNtPbPsu6WVhbNHMS3Ss2+AehHvz+n64GDmXxbX++IOBvm2olHu3PsOUGRwhudhVf7UcGcunXt8cqNjKNqZLhLw4jq\/xDg==" //微信签名
+      },
+      function(res) {
+          if (res.err_msg == "get_brand_wcpay_request:ok") {
+              // 使用以上方式判断前端返回,微信团队郑重提示：
+              //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+          }else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
+            //取消支付
+          } else {
+            //支付失败
+          }
+      });
+  }
+  
+  if (typeof WeixinJSBridge == "undefined") {
+      if (document.addEventListener) {
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+      } else if (document.attachEvent) {
+          document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+          document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+      }
+  } else {
+      onBridgeReady();
+  }	  
+  
+```
+
+### H5支付
+用于触屏版的手机浏览器请求微信支付的场景，方便从外部浏览器唤起微信支付
+
+https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_6_0.shtml
+
+主要为拼接url;window.location.href = url;
+```
+正常流程用户支付完成后会返回至发起支付的页面，如需返回至指定页面，则可以在h5_url后拼接上redirect_url参数，来指定回调页面。您希望用户支付完成后跳转至https://www.wechatpay.com.cn，
+则拼接后的地址为h5_url= https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx20161110163838f231619da20804912345&package=1037687096&redirect_url=https%3A%2F%2Fwww.wechatpay.com.cn
+需对redirect_url进行urlencode处理
+```
+
+### 小程序支付
+
+https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_8_2.shtml
+
+```
+wx.requestPayment(
+{
+"timeStamp": "1414561699",
+"nonceStr": "5K8264ILTKCH16CQ2502SI8ZNMTM67VS",
+"package": "prepay_id=wx201410272009395522657a690389285100",
+"signType": "RSA",
+"paySign": "oR9d8PuhnIc+YZ8cBHFCwfgpaK9gd7vaRvkYD7rthRAZ\/X+QBhcCYL21N7cHCTUxbQ+EAt6Uy+lwSN22f5YZvI45MLko8Pfso0jm46v5hqcVwrk6uddkGuT+Cdvu4WBqDzaDjnNa5UK3GfE1Wfl2gHxIIY5lLdUgWFts17D4WuolLLkiFZV+JSHMvH7eaLdT9N5GBovBwu5yYKUR7skR8Fu+LozcSqQixnlEZUfyE55feLOQTUYzLmR9pNtPbPsu6WVhbNHMS3Ss2+AehHvz+n64GDmXxbX++IOBvm2olHu3PsOUGRwhudhVf7UcGcunXt8cqNjKNqZLhLw4jq\/xDg==",
+"success":function(res){},
+"fail":function(res){},
+"complete":function(res){}
+})
+```
