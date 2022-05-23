@@ -39,9 +39,17 @@ type:input的类型
 重置按钮(type=reset):重置它所属form的所有表单元素(包括input、textarea、select)
 提交按钮(type=submit):提交它所属form的表单数据给服务器(包括input、textarea、select)
 
-## label
+```
+<input type="reset" value="重置">
+<input type="submit" value="提交">
+/// 等同于
+<button type="reset">重置</button>
+<button type="submit">提交</button>
+```
+
+### label
 label元素一般跟input配合使用，用来表示input的标题
-labe可以跟某个input绑定，点击label就可以激活对应的input变成选中
+labe可以跟某个input绑定，点击label就可以激活对应的input变成选中,通过for属性绑定对应input的id.
 
 ```
 <div>
@@ -49,8 +57,15 @@ labe可以跟某个input绑定，点击label就可以激活对应的input变成�
     <input id="name" type="text" name="name">
 </div>
 <div>
-    <label for="password">密码:</label>
-    <input id="password" type="password" name="password">
+    <label>密码:
+        <input id="password" type="password" name="password">
+    </label>
+    
 </div>
 ```
+
+### radio
+type类型设置为radio变成单选框
+name值相同的radio才具备单选功能
+
   
