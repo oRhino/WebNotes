@@ -11,6 +11,10 @@
 ## 静态方法
 - all(ES2015) 全部Promise执行成功,或者任意一个执行失败.
 
+将多个Promise包裹在一起形成一个新的Promise;新的Promise状态由包裹的所有Promise共同决定:
+当所有的Promise状态变成fulfilled状态时，新的Promise状态为fulfilled，并且会将所有Promise的返回值 组成一个数组;
+当有一个Promise状态为reject时，新的Promise状态为reject，并且会将第一个reject的返回值作为参数;
+ 
 ```
 let  p1 = new Promise((resolve,reject) => {
     setTimeout(() => {
@@ -38,6 +42,11 @@ Promise.all([p1,p2,p3]).then(res => {
 ```
 - allSettled(ES2020) 执行多个Promise,不论成功和失败,结果全部返回.
 
+all方法有一个缺陷:当有其中一个Promise变成reject状态时，新Promise就会立即变成对应的reject状态。那么对于resolved的，以及依然处于pending状态的Promise，我们是获取不到对应的结果的;
+在ES11(ES2020)中，添加了新的API Promise.allSettled:
+该方法会在所有的Promise都有结果(settled)，无论是fulfilled，还是reject时，才会有最终的状态; 并且这个Promise的结果一定是fulfilled的;
+
+allSettled的结果是一个数组，数组中存放着每一个Promise的结果，并且是对应一个对象的; 这个对象中包含status状态，以及对应的value/reason值;
 ```
 let  p1 = new Promise((resolve,reject) => {
     setTimeout(() => {
@@ -63,8 +72,19 @@ Promise.allSettled([p1,p2,p3]).then(res => {
 ```
 - any(ES2021) 接受一个Promise集合,返回第一个成功者.
 
+any方法会等到一个fulfilled状态，才会决定新Promise的状态;
+如果所有的Promise都是reject的，那么也会等到所有的Promise都变成rejected状态;
+如果所有的Promise都是reject的，那么会报一个AggregateError的错误。
+```
+
+
+```
 
 - race(ES2015) Promise集合中,返回最快的Promise触发结果.
+ race是竞技、竞赛的意思，表示多个Promise相互竞争，谁先有结果，那么就使用谁的结果;
+```
+
+```
 - resolve 返回一个解析过参数的Promise对象.
 - reject 返回一个状态为失败的Promise对象.
 
