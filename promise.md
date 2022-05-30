@@ -75,16 +75,10 @@ Promise.allSettled([p1,p2,p3]).then(res => {
 any方法会等到一个fulfilled状态，才会决定新Promise的状态;
 如果所有的Promise都是reject的，那么也会等到所有的Promise都变成rejected状态;
 如果所有的Promise都是reject的，那么会报一个AggregateError的错误。
-```
-
-
-```
 
 - race(ES2015) Promise集合中,返回最快的Promise触发结果.
  race是竞技、竞赛的意思，表示多个Promise相互竞争，谁先有结果，那么就使用谁的结果;
-```
 
-```
 - resolve 返回一个解析过参数的Promise对象.
 - reject 返回一个状态为失败的Promise对象.
 
@@ -94,6 +88,41 @@ any方法会等到一个fulfilled状态，才会决定新Promise的状态;
 - catch 返回一个Promise,并处理被拒绝的情况.
 - finally 返回一个Promise,在Promise结束时,无论成功或者失败都执行该回调.
 
+## resolve参数
+1. 普通的值或者对象 pending -> fulfilled
+2. 传入一个Promise,那么当前的Promise的状态会由传入的Promise来决定,相当于状态进行了移交
+3. 传入一个对象, 并且这个对象有实现then方法(并且这个对象是实现了thenable接口),那么也会执行该then方法, 并且又该then方法决定后续状态
+
+```
+//传入一个promise
+const newPromise = new Promise((resolve, reject) => {
+  reject("err message")
+})
+new Promise((resolve, reject) => {
+  resolve(newPromise)
+}).then(res => {
+  console.log("res:", res)
+}, err => {
+  console.log("err:", err)
+})
+// err: err message
+
+//传入一个thenable
+new Promise((resolve, reject) => {
+  const obj = {
+    then: function(resolve, reject) {
+      resolve("resolve message")
+    }
+  }
+  resolve(obj)
+}).then(res => {
+  console.log("res:", res)
+}, err => {
+  console.log("err:", err)
+})
+//res: resolve message
+
+```
 ## 应用
 1. 延迟函数
 
