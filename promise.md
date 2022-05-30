@@ -85,6 +85,60 @@ any方法会等到一个fulfilled状态，才会决定新Promise的状态;
 
 ## 原型方法
 - then 返回一个Promise,最多两个参数,成功和失败后的回调函数.
+  1. 同一个promise可以被多次调用then方法
+```
+const promise = new Promise((resolve, reject) => { resolve("11") })
+  
+promise.then(res => {
+  console.log("res1:", res)
+})
+promise.then(res => {
+  console.log("res2:", res)
+})
+///两个then方法都会得到调用
+```
+ 2. then方法是可以链式调用的,因为它的返回值是Promise
+```
+//如果返回的是一个普通值(数值/字符串/普通对象/undefined), 那么这个普通的值被作为一个新的Promise的resolve值
+const promise = new Promise((resolve, reject) => {
+  resolve("1")
+})
+promise.then(res => {
+  console.log(res);
+  return "2"
+}).then(res => {
+  console.log(res);
+})
+
+// 1  2 
+
+// 如果返回的是一个Promise
+promise.then(res => {
+  console.log(res);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(2)
+    }, 3000)
+  })
+}).then(res => {
+  console.log(res)
+})
+// 1 2 
+
+// 如果返回的是一个对象, 并且该对象实现了thenable
+promise.then(res => {
+  console.log(res)
+  return {
+    then: function(resolve, reject) {
+      resolve(2)
+    }
+  }
+}).then(res => {
+  console.log(res)
+})
+// 1 2 
+```
+
 - catch 返回一个Promise,并处理被拒绝的情况.
 - finally 返回一个Promise,在Promise结束时,无论成功或者失败都执行该回调.
 
