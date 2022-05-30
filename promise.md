@@ -10,8 +10,60 @@
 
 ## 静态方法
 - all(ES2015) 全部Promise执行成功,或者任意一个执行失败.
+
+```
+let  p1 = new Promise((resolve,reject) => {
+    setTimeout(() => {
+        resolve('1');
+    }, 1000);
+})
+
+let  p2 = new Promise((resolve,reject) => {
+    setTimeout(() => {
+        resolve('2');
+    }, 2000);
+})
+let  p3 = new Promise((resolve,reject) => {
+    setTimeout(() => {
+        resolve('3');
+    }, 2000);
+})
+
+Promise.all([p1,p2,p3]).then(res => {
+    console.log(res);
+}).catch(err => {
+    console.log(err);
+})
+//[ '1', '2', '3' ]
+```
 - allSettled(ES2020) 执行多个Promise,不论成功和失败,结果全部返回.
+
+```
+let  p1 = new Promise((resolve,reject) => {
+    setTimeout(() => {
+        resolve('1');
+    }, 1000);
+})
+
+let  p2 = new Promise((resolve,reject) => {
+    setTimeout(() => {
+        resolve('2');
+    }, 2000);
+})
+let  p3 = new Promise((resolve,reject) => {
+    throw new Error('failed');
+})
+
+Promise.allSettled([p1,p2,p3]).then(res => {
+    console.log(res);
+}).catch(err => {
+    console.log(err);
+})
+// [{ status: 'fulfilled', value: '1' },{ status: 'fulfilled', value: '2' },{status: 'rejected',reason: Error: failed }]
+```
 - any(ES2021) 接受一个Promise集合,返回第一个成功者.
+
+
 - race(ES2015) Promise集合中,返回最快的Promise触发结果.
 - resolve 返回一个解析过参数的Promise对象.
 - reject 返回一个状态为失败的Promise对象.
