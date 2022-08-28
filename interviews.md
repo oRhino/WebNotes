@@ -48,6 +48,30 @@
  2. 组件创建完成
  3. 开始用'创建阶段' 进入 '运行阶段'
 
+- beforeUpdate
+ 1. data发生变化之后
+ 2. 准备更新DOM(尚未更新DOM)
+
+- updated
+ 1. data发生变化,且Dom更新完成
+ 2. 不要在(Updated中修改data,可能会导致死循环)
+
+- beforeUnmount
+ 1. 组件进入销毁阶段(尚未销毁,可正常使用)
+ 2. 可移除,解绑一些全局事件,自定义事件.
+
+- unmounted
+1. 组件被销毁了
+2. 所有的子组件也都被销毁了
+
+- keep-alive组件
+1. onActivated缓存组件被激活
+2. onDeactivated缓存组件被隐藏
+
+### Vue什么时候操作DOM比较合适
+- mounted和update都不能保证子组件全部挂载完成
+- 使用$nextTick渲染DOM
+
 ### vue2/vue3/react diff算法有什么不同
 
 - diff算法
@@ -63,6 +87,14 @@
 - diff会根据key是否相同判断元素是否要删除
 - 匹配了key,则只移动元素,性能较好
 - 未匹配到key,则删除重建,性能较差
+
+### Vue组件通信方式
+- props/$emits(父子组件)
+- 自定义事件(eventbus,event-emitter,vue2-on/off/emits...)(全局组件) 
+- $attrs/$listener(vue3移除了$listener,合并到$attrs)(父子)
+- $parent/$refs(父子)
+- provide/inject(跨层级)
+- vuex(全局组件) 
 
 
  
