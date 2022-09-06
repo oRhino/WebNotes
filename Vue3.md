@@ -159,5 +159,66 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 // Check the console for the AST
 ```
+### cacheHandler 事件监听缓存
+- 缓存方法
 
+ ```
+ <div>
+  <span @click="btnClick">Hello World</span>
+</div>
+
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createElementVNode("span", {
+      onClick: _cache[0] || (_cache[0] = (...args) => (_ctx.btnClick && _ctx.btnClick(...args)))
+    }, "Hello World")
+  ]))
+}
+
+// Check the console for the AST
+ ```
+
+
+### SSR优化
+- 静态节点直接输出,绕过了vdom
+- 动态节点还是需要动态渲染
+
+```
+<div>
+  <span>Hello World</span>
+  <span>Hello World</span>
+  <span>Hello World</span>
+  <span>{{msg}}</span>
+</div>
+
+import { mergeProps as _mergeProps } from "vue"
+import { ssrRenderAttrs as _ssrRenderAttrs, ssrInterpolate as _ssrInterpolate } from "vue/server-renderer"
+
+export function ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _cssVars = { style: { color: _ctx.color }}
+  _push(`<div${
+    _ssrRenderAttrs(_mergeProps(_attrs, _cssVars))
+  }><span>Hello World</span><span>Hello World</span><span>Hello World</span><span>${
+    _ssrInterpolate(_ctx.msg)
+  }</span></div>`)
+}
+
+// Check the console for the AST
+
+```
+### tree-shaking
+- 编译的时候,根据不同的情况,引入不同的API
+
+## Vite为什么启动快
+- 开发环境使用ESMoudle,无需打包
+- 生产环境使用rollup,并不会快很多
+
+
+## composition api 和 react hooks 对比
+- 前者setup只会调用一次,而后者函数会被多次调用
+- 前者无需 useMemo useCallBack,因为setup只会调用一次;
+- 前者无需顾虑调用顺序,而后者需要保证hooks的顺序一致
+- 前者reactive + ref比后者useState,要难理解
 
