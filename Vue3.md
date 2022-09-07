@@ -19,6 +19,9 @@
 - 编译模板时,动态节点做标记
 - 标记,分为不同的类型,如TEXT,PROPS
 - diff算法时,可以区分静态节点,以及不同类型的动态节点 (只对比动态节点)
+   . 只比对带有PF的节点
+   . 并且通过Flag的信息得知当前节点要比对的具体内容
+
 
 ```
 // https://vue-next-template-explorer.netlify.app/
