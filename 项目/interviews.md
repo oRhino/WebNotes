@@ -68,6 +68,27 @@
 1. onActivated缓存组件被激活
 2. onDeactivated缓存组件被隐藏
 
+```js
+// 挂载
+父组件 beforeCreate
+父组件 created
+子组件 beforeCreate
+子组件 created
+子组件 mounted
+父组件 mounted
+
+// 更新
+子组件 updated
+父组件 updated
+
+// 卸载
+父组件 beforeDestroy
+子组件 beforeDestroy
+子组件 destroyed
+父组件 destroyed
+
+```
+
 ### Vue什么时候操作DOM比较合适
 - mounted和update都不能保证子组件全部挂载完成
 - 使用$nextTick渲染DOM
