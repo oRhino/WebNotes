@@ -94,3 +94,42 @@ filter:直接将模糊或颜色偏移等模糊效果应用于指定的元素。
 ```
 
 ## 形变
+
+## stroke 描边动画
+
+1. stroke-dasharray 为一个参数时： 其实是表示虚线长度和每段虚线之间的间距
+   　　如：stroke-dasharray = ‘10’ 表示：虚线长 10，间距 10，然后重复 虚线长 10，间距 10
+
+两个参数或者多个参数时：一个表示长度，一个表示间距
+　　如：stroke-dasharray = ‘10, 5’ 表示：虚线长 10，间距 5，然后重复 虚线长 10，间距 5
+　　如：stroke-dasharray = ‘20, 10, 5’ 表示：虚线长 20，间距 10，虚线长 5，接着是间距 20，虚线 10，间距 5，之后开始如此循环
+
+2. stroke-dashoffset： 在 dasharray 模式下路径的偏移量。
+   值为 number 类型，除了可以正值，也可以取负值,相对于起始点的偏移，正数相当于往左移动了 x 个长度单位，负数相当于往右移动了 x 个长度单位。
+
+```js
+<svg width='300' height='150' xmlns='http://www.w3.org/2000/svg'>
+  <polyline
+    class='line'
+    points='100,20, 200, 20,200,100'
+    fill='transparent'
+    stroke='red'
+    stroke-width='5'
+  ></polyline>
+</svg>
+```
+
+```css
+.line {
+  stroke-dasharray: 180;
+  /* 一开始是不可见的 */
+  stroke-dashoffset: 180;
+  animation: moveLine 3s linear forwards;
+}
+
+@keyframes moveLine {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+```
